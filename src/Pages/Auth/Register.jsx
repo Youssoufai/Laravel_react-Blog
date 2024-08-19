@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 export default function Register() {
+    const { token, setToken } = useContext(AppContext)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
@@ -25,6 +27,7 @@ export default function Register() {
             setErrors(data.errors);
         } else if (res.ok) {
             localStorage.setItem('token', data.token)
+            setToken(data.token)
             navigate("/")
             console.log(data);
             // Handle successful registration (e.g., redirect, clear form, etc.)
@@ -34,7 +37,7 @@ export default function Register() {
     return (
         <div>
             <h1 className="title">Register your account</h1>
-
+            {token}
             <form onSubmit={handleRegister} className="w-1/2 mx-auto">
                 <div>
                     <input
