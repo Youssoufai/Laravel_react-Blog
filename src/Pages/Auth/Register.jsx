@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -22,6 +24,8 @@ export default function Register() {
         if (data.errors) {
             setErrors(data.errors);
         } else if (res.ok) {
+            localStorage.setItem('token', data.token)
+            navigate("/")
             console.log(data);
             // Handle successful registration (e.g., redirect, clear form, etc.)
         }
