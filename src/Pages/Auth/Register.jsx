@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -7,34 +7,72 @@ export default function Register() {
         password: '',
         password_confirmation: '',
     });
+    const [errors, setErrors] = useState({});
+
     async function handleRegister(e) {
         e.preventDefault();
         const res = await fetch("/api/register", {
             method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(formData),
         });
-        const data = await res.json()
-        console.log(data);
+        const data = await res.json();
+        if (data.errors) {
+            setErrors(data.errors);
+        } else if (res.ok) {
+            console.log(data);
+            // Handle successful registration (e.g., redirect, clear form, etc.)
+        }
     }
+
     return (
         <div>
             <h1 className="title">Register your account</h1>
 
             <form onSubmit={handleRegister} className="w-1/2 mx-auto">
                 <div>
-                    <input type="text" name="" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} id="" />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                    {errors.name && <p className="error">{errors.name[0]}</p>}
                 </div>
                 <div>
-                    <input type="text" name="" placeholder="Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} id="" />
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    />
+                    {errors.email && <p className="error">{errors.email[0]}</p>}
                 </div>
                 <div>
-                    <input type="text" name="" onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Password" id="" />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    />
+                    {errors.password && <p className="error">{errors.password[0]}</p>}
                 </div>
                 <div>
-                    <input type="text" name="" onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })} placeholder="Confirm Password" id="" />
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        placeholder="Confirm Password"
+                        value={formData.password_confirmation}
+                        onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })}
+                    />
                 </div>
                 <button className="primary-btn">Register</button>
             </form>
         </div>
-    )
+    );
 }
