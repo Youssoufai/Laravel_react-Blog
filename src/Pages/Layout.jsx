@@ -10,7 +10,9 @@ export default function Layout() {
                     <Link to="/" className="nav-link">Home</Link>
                     {user ? (
                         <div>
-                            {user.name}
+                            <p>
+                                Welcome {user.name}
+                            </p>
                         </div>
                     ) : (
                         <div className="space-x-4">
