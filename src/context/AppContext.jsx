@@ -22,7 +22,7 @@ export default function AppProvider({ children }) {
         console.log('Effect Ran!')
     }, [token])
     return (
-        <AppContext.Provider value={{ token, setToken }}>
+        <AppContext.Provider value={{ token, setToken, user }}>
             {children}
         </AppContext.Provider>
     )
