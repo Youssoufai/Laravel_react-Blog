@@ -9,8 +9,12 @@ export default function Register() {
     });
     async function handleRegister(e) {
         e.preventDefault();
-        const res = fetch('api/register')
-        console.log(formData);
+        const res = await fetch("/api/register", {
+            method: "post",
+            body: JSON.stringify(formData),
+        });
+        const data = await res.json()
+        console.log(data);
     }
     return (
         <div>
