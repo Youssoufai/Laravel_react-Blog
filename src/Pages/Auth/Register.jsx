@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
 export default function Register() {
-    const { token, setToken } = useContext(AppContext)
+    const { setToken } = useContext(AppContext)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
@@ -37,7 +37,7 @@ export default function Register() {
     return (
         <div>
             <h1 className="title">Register your account</h1>
-            {token}
+
             <form onSubmit={handleRegister} className="w-1/2 mx-auto">
                 <div>
                     <input
